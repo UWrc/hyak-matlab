@@ -1,0 +1,20 @@
+---
+batch_connect:
+  template: "vnc"
+#  conn_params:
+#    - csrftoken
+
+script:
+  queue_name: "<%= auto_queues %>"
+  accounting_id: "<%= auto_accounts %>"
+  native:
+    - "--ntasks"
+    - "<%= htasks.blank? ? 1 : htasks.to_i %>"
+    - "--cpus-per-task"
+    - "<%= hcpus.blank? ? 1 : hcpus.to_i %>"
+    - "--mem"
+    - "<%= hmem.blank? ? 1 : hmem.to_i %>GB"
+    <%- if hgpus.to_i > 0 -%>
+    - "--gpus"
+    - "<%= hgputype.blank? ? hgpus : hgputype + ":" + hgpus %>"
+    <%- end -%>
