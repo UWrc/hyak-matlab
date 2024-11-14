@@ -33,9 +33,9 @@ until fluxbox -display "${DISPLAY}.0" -rc "<%= session.staged_root.join("fluxbox
 # Start Eclipse
 #
 
-export VGL_DISPLAY=$DISPLAY
-export ABA_ACCELERATOR_TYPE="PLATFORM_CUDA"
+#export VGL_DISPLAY=$DISPLAY
+#export ABA_ACCELERATOR_TYPE="PLATFORM_CUDA"
 
 # Launch Matlab
 set -x
-matlab
+matlab -desktop
