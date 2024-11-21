@@ -1,6 +1,16 @@
 ---
 batch_connect:
   template: "vnc"
+  script_wrapper: |
+    __conda_setup="$('/mmfs1/sw/ondemand/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+    eval "$__conda_setup"
+    conda activate /mmfs1/sw/ondemand/condaenv
+    export WEBSOCKIFY_CMD=/mmfs1/sw/ondemand/condaenv/bin/websockify
+    export PATH=/mmfs1/sw/ondemand/turbovnc-2.2.9/bin:$PATH
+    export LD_LIBRARY_PATH=/mmfs1/sw/ondemand/turbovnc-2.2.9/lib64:$LD_LIBRARY_PATH
+    export PKG_CONFIG_PATH=/mmfs1/sw/ondemand/turbovnc-2.2.9/lib64/pkgconfig:$PKG_CONFIG_PATH
+    %s
+
 #  conn_params:
 #    - csrftoken
 
