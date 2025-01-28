@@ -30,15 +30,15 @@ attributes:
           data-hide-hgpus: true,
         ]
       - [ 'ckpt-g2', 'ckpt-g2',
-          data-set-hgputype: 'none',
+          data-set-hgputype: 'l40s',
+          data-hide-hgputype: 'true',
           data-set-hgpus: 0,
-          data-hide-hgpus: true,
         ]
       - [ 'ckpt-all', 'ckpt-all',
           data-set-hgputype: 'none',
           data-set-hgpus: 0,
           data-hide-hgpus: true,
-        ] 
+        ]
       <%- hyakparts.each do |p| -%>
       - [
         "<%= p %>", "<%= p %>",
@@ -73,7 +73,11 @@ attributes:
       - [ "None", "none", data-set-hgpus: 0, data-hide-hgpus: true ]
       - [ "Any", "", data-set-hgpus: 0 ]
       <%- ckptgpus.each do |k, v| -%>
-      - [ "<%= v %>", "<%= k %>" ]
+      - [ "<%= v %>", "<%= k %>",
+        <%- if k == "l40s" -%>
+        data-option-for-hqueue-ckpt: "false",
+        <%- end -%>
+        ]
       <%- end -%>
   hgpus:
     label: GPUs
@@ -81,50 +85,10 @@ attributes:
     min: 0
     max: 8
     value: 0
-  sif:
-    label: RStudio Server Container
-    widget: select
-    help: Select 'Custom' if you have created your own RStudio-Server Apptainer image.
-    options:
-    - [
-        "rocker/rstudio",
-        "/mmfs1/sw/ondemand/containers/rstudio/rocker-rstudio",
-        data-hide-custom-sif: true
-      ]
-    - [
-        "rocker/geospatial",
-        "/mmfs1/sw/ondemand/containers/rstudio/rocker-geospatial",
-        data-hide-custom-sif: true
-      ]
-    - [
-        "rocker/tidyverse",
-        "/mmfs1/sw/ondemand/containers/rstudio/rocker-tidyverse",
-        data-hide-custom-sif: true
-      ]
-    - [
-        "rocker/verse",
-        "/mmfs1/sw/ondemand/containers/rstudio/rocker-verse",
-        data-hide-custom-sif: true
-      ]
-    - [ "Custom", "" ]
-    value: "Default"
-  custom_sif:
-    label: Full path to your customized RStudio-Server Apptainer image.
-    help: "e.g. /mmfs1/gscratch/labname/containers/my_rstudio_server.sif"
-  r_libs_user:
-    label: "User R library path (R_LIBS_USER)"
-    help: |
-      If left blank, will default to ${HOME}/R/ood-rstudio/. More information here:
-      https://rstudio.github.io/r-manuals/r-admin/Add-on-packages.html#managing-libraries
 
 form:
-#  - haccount
-#  - hqueue
-  - auto_accounts
-  - auto_queues
-#  - sif
-#  - custom_sif
-#  - r_libs_user
+  - haccount
+  - hqueue
   - htasks
   - hcpus
   - hmem
